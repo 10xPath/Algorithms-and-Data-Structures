@@ -19,19 +19,20 @@ func getSubsets(nums: [Int]) -> [[Int]] {
     return results
 }
 
+// O(n) ?
+// O(n)
 func getSubsetsHelper(nums: [Int], results: inout [[Int]], subArray: inout [Int], startIndex: Int) {
-    print("In recursion number \(startIndex)")
-    print("Adding \(subArray) to results that has \(results) at startIndex \(startIndex)")
+    print("Adding \(subArray) to results that has \(results) at recusion number \(startIndex)")
     results.append(subArray)
-//    [[], [1], [1, 3], [1, 3, 2]]
+    
     for i in startIndex..<nums.count {
-        print("In loop number \(i)")
-        print("Adding \(nums[i])")
+        print("Adding \(nums[i]) to subarray that has \(subArray) at loop \(i)")
         subArray.append(nums[i])
-        getSubsetsHelper(nums: nums, results: &results, subArray: &subArray, startIndex: startIndex + 1)
+        getSubsetsHelper(nums: nums, results: &results, subArray: &subArray, startIndex: i + 1)
         subArray.removeLast()
     }
 }
+
 
 print(getSubsets(nums: nums))
 
