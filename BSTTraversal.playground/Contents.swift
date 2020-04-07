@@ -129,8 +129,6 @@ func countFreqOfKeyRecursionHelper(tree: BST?, forKey: Int, forCount: inout Int)
                 countFreqOfKeyRecursionHelper(tree: currentNode.right, forKey: forKey, forCount: &forCount)
             }
         }
-    } else {
-        return forCount
     }
 }
 
