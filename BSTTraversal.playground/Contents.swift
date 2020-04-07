@@ -106,5 +106,33 @@ func countFreqOfKey(tree: BST?, forKey: Int) -> Int {
     return count
 }
 
+func countFreqOfKeyRecursion(tree: BST?, forKey: Int) -> Int {
+    var count = 0
+    let currentNode = tree
+    countFreqOfKeyRecursionHelper(tree: currentNode, forKey: forKey, forCount: &count)
+    return count
+     
+}
+
+//O(n) Run time
+//O(n) Space time
+func countFreqOfKeyRecursionHelper(tree: BST?, forKey: Int, forCount: inout Int)  {
+    if let currentNode = tree {
+        if let nodeValue = currentNode.value {
+            if nodeValue == forKey {
+                forCount = forCount + 1
+            }
+            
+            if forKey < nodeValue {
+                countFreqOfKeyRecursionHelper(tree: currentNode.left, forKey: forKey, forCount: &forCount)
+            } else {
+                countFreqOfKeyRecursionHelper(tree: currentNode.right, forKey: forKey, forCount: &forCount)
+            }
+        }
+    } else {
+        return forCount
+    }
+}
+
 
 
