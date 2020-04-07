@@ -111,7 +111,7 @@ func countFreqOfKeyRecursion(tree: BST?, forKey: Int) -> Int {
     let currentNode = tree
     countFreqOfKeyRecursionHelper(tree: currentNode, forKey: forKey, forCount: &count)
     return count
-     
+    
 }
 
 //O(log(n)) Run time
@@ -127,6 +127,39 @@ func countFreqOfKeyRecursionHelper(tree: BST?, forKey: Int, forCount: inout Int)
                 countFreqOfKeyRecursionHelper(tree: currentNode.left, forKey: forKey, forCount: &forCount)
             } else {
                 countFreqOfKeyRecursionHelper(tree: currentNode.right, forKey: forKey, forCount: &forCount)
+            }
+        }
+    }
+}
+
+func getUniquePathsInBST(tree: BST?) -> [[Int]] {
+    var paths: [[Int]] = []
+    var path: [Int] = []
+    getUniquePathsInBSTHelper(tree: tree, paths: &paths, path: &path)
+    
+    return paths
+}
+
+
+// O(n) run time
+// O(n) space time
+
+func getUniquePathsInBSTHelper(tree: BST?, paths: inout [[Int]], path: inout [Int]) {
+    
+    if let currentNode = tree {
+        if let nodeValue = currentNode.value {
+            path.append(nodeValue)
+        }
+        
+        if currentNode.left == nil && currentNode.right == nil {
+            paths.append(path)
+        } else {
+            if let leftNode = currentNode.left {
+                getUniquePathsInBSTHelper(tree: leftNode, paths: &paths, path: &path)
+            }
+            
+            if let rightNode = currentNode.right {
+                getUniquePathsInBSTHelper(tree: rightNode, paths: &paths, path: &path)
             }
         }
     }
