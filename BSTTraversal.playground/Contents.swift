@@ -32,8 +32,8 @@ class BST {
     
 }
 
-//O(n) Run time
-//O(n) Space time
+//O(l + r) Run time
+//O(l + r) Space time
 func inOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {
     if let node = tree {
         inOrderTraversal(tree: node.left, array: &array)
@@ -46,8 +46,8 @@ func inOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {
     return array
 }
 
-//O(n) Run time
-//O(n) Space time
+//O(l + r) Run time
+//O(l + r) Space time
 func preOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {
     if let node = tree {
         if let value = node.value {
@@ -60,8 +60,8 @@ func preOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {
 }
 
 
-//O(n) Run time
-//(n) Space Time
+//O(l + r ) Run time
+//(l + r) Space Time
 func postOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {
     if let node = tree {
         postOrderTraversal(tree: node.left, array: &array)
@@ -74,7 +74,7 @@ func postOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {
     return array
 }
 
-//O(n) Run time
+//O(log(n)) Run time
 //O(1) Space time
 func countFreqOfKey(tree: BST?, forKey: Int) -> Int {
     var count = 0
@@ -114,8 +114,8 @@ func countFreqOfKeyRecursion(tree: BST?, forKey: Int) -> Int {
      
 }
 
-//O(n) Run time
-//O(n) Space time
+//O(log(n)) Run time
+//O(log(n)) Space time
 func countFreqOfKeyRecursionHelper(tree: BST?, forKey: Int, forCount: inout Int)  {
     if let currentNode = tree {
         if let nodeValue = currentNode.value {
