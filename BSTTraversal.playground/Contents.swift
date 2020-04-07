@@ -167,28 +167,6 @@ func getUniquePathsInBSTHelper(tree: BST?, paths: inout [[Int]], path: inout [In
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //4. To find the max sum nodes in a path from root to leaf in a BST
 
 // Run Time O(n^2)
