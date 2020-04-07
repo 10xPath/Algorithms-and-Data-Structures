@@ -5,6 +5,7 @@ var str = "Hello, playground"
 
 var nums = [1,2,3]
 
+//3. To find the subsets of an array of integers
 func getSubsets(nums: [Int]) -> [[Int]] {
     
     var results: [[Int]] = []

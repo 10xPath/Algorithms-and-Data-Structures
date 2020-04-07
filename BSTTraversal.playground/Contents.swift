@@ -114,6 +114,7 @@ func countFreqOfKeyRecursion(tree: BST?, forKey: Int) -> Int {
     
 }
 
+//1. Write a recursive function that returns the frequency of a key given as input in a BST
 //O(log(n)) Run time
 //O(log(n)) Space time
 func countFreqOfKeyRecursionHelper(tree: BST?, forKey: Int, forCount: inout Int)  {
@@ -132,6 +133,7 @@ func countFreqOfKeyRecursionHelper(tree: BST?, forKey: Int, forCount: inout Int)
     }
 }
 
+//2.To find the unique path in a Binary tree
 func getUniquePathsInBST(tree: BST?) -> [[Int]] {
     var paths: [[Int]] = []
     var path: [Int] = []
@@ -165,5 +167,80 @@ func getUniquePathsInBSTHelper(tree: BST?, paths: inout [[Int]], path: inout [In
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//4. To find the max sum nodes in a path from root to leaf in a BST
+
+// Run Time O(n^2)
+// Space Complexity O(n) because of recursion
+func getMaxSumInPaths(tree: BST?) -> Int {
+    //getPaths
+    //getMaxSumFromPaths
+    var maxSum = 0
+    var uniquePaths: [[Int]] = []
+    var path: [Int] = []
+    
+    getUniquePathsInBSTHelper(tree: tree, paths: &uniquePaths, path: &path)
+    
+    maxSum = getMaxSumFromPaths(uniquePath: uniquePaths)
+    return maxSum
+}
+
+func getUniquePathsInTree(tree: BST?, uniquePaths: inout [[Int]], path: inout[Int]) -> [[Int]] {
+    if let currentNode = tree {
+        if let nodeValue = currentNode.value {
+            path.append(nodeValue)
+        }
+        if currentNode.left == nil && currentNode.right == nil {
+            uniquePaths.append(path)
+        } else {
+            if let leftNode = currentNode.left {
+                getUniquePathsInTree(tree: leftNode, uniquePaths: &uniquePaths, path: &path)
+            }
+            
+            if let rightNode = currentNode.right {
+                getUniquePathsInTree(tree: rightNode, uniquePaths: &uniquePaths, path: &path)
+            }
+        }
+    }
+    return []
+}
+
+
+//
+func getMaxSumFromPaths(uniquePath:[[Int]]) -> Int {
+    var maxSum = 0
+    var currentSum = 0
+    
+    for path in uniquePath {
+        maxSum = currentSum > maxSum ? currentSum : maxSum
+        currentSum = 0
+        for element in path {
+            currentSum = currentSum + element
+        }
+    }
+    
+    return maxSum
+}
 
 
