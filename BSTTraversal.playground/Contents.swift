@@ -106,32 +106,27 @@ func countFreqOfKey(tree: BST?, forKey: Int) -> Int {
     return count
 }
 
-func countFreqOfKeyRecursion(tree: BST?, forKey: Int) -> Int {
-    var count = 0
-    let currentNode = tree
-    countFreqOfKeyRecursionHelper(tree: currentNode, forKey: forKey, forCount: &count)
-    return count
-    
-}
+//1. 1^n
 
-//1. Write a recursive function that returns the frequency of a key given as input in a BST
-//O(log(n)) Run time
-//O(log(n)) Space time
-func countFreqOfKeyRecursionHelper(tree: BST?, forKey: Int, forCount: inout Int)  {
+func countFreqOfKeyRecursion(tree: BST?, forKey: Int) -> Int {
+    
     if let currentNode = tree {
         if let nodeValue = currentNode.value {
             if nodeValue == forKey {
-                forCount = forCount + 1
-            }
-            
-            if forKey < nodeValue {
-                countFreqOfKeyRecursionHelper(tree: currentNode.left, forKey: forKey, forCount: &forCount)
+                return countFreqOfKey(tree: currentNode.right, forKey: forKey) + 1
+            } else if forKey < nodeValue {
+                return countFreqOfKey(tree: currentNode.left, forKey: forKey)
             } else {
-                countFreqOfKeyRecursionHelper(tree: currentNode.right, forKey: forKey, forCount: &forCount)
+                return countFreqOfKey(tree: currentNode.right, forKey: forKey)
             }
         }
+    } else {
+        return 0
     }
+    
+    return 0
 }
+
 
 //2.To find the unique path in a Binary tree
 func getUniquePathsInBST(tree: BST?) -> [[Int]] {
@@ -222,3 +217,44 @@ func getMaxSumFromPaths(uniquePath:[[Int]]) -> Int {
 }
 
 
+//**
+// * Definition for a binary tree node.
+// * public class TreeNode {
+// *     public var val: Int
+// *     public var left: TreeNode?
+// *     public var right: TreeNode?
+// *     public init(_ val: Int) {
+// *         self.val = val
+// *         self.left = nil
+// *         self.right = nil
+// *     }
+// * }
+// */
+
+//func closestValue(_ root: TreeNode?, _ target: Double) -> Int {
+//
+//       return closestValueHelper(root: root, target: target, minDifference: Double.greatestFiniteMagnitude, minDifferenceNodeValue: Int.max)
+//   }
+//
+//   func closestValueHelper(root: TreeNode?, target: Double, minDifference: Double, minDifferenceNodeValue: Int) -> Double {
+//
+//       if root == nil {
+//           return minDifferenceNodeValue
+//       } else {
+//           if let nodeValue = root.val as? Double {
+//               let currentDifference = abs(nodeValue - target)
+//               var minDiff = minDifference
+//               var minDiffNode = minDifferenceNodeValue
+//               if currentDifference < minDifference {
+//                   minDiff = currentDifference
+//                   minDiffNode = nodeValue as? Int ?? Double.greatestFinitMagnitude
+//               }
+//
+//               if target > nodeValue {
+//                     closestValueHelper(root: root.right, target: target, minDifference: minDiff, minDifferenceNodeValue: minDiffNode)
+//                   } else {
+//                     closestValueHelper(root: root.left, target: target, minDifference: minDiff, minDifferenceNodeValue: minDiffNode)
+//                   }
+//           }
+//       }
+//   }
