@@ -128,93 +128,25 @@ func countFreqOfKeyRecursion(tree: BST?, forKey: Int) -> Int {
     return 0
 }
 
-
-//2.To find the unique path in a Binary tree
-func getUniquePathsInBST(tree: BST?) -> [[Int]] {
-    var paths: [[Int]] = []
-    var path: [Int] = []
-    getUniquePathsInBSTHelper(tree: tree, paths: &paths, path: &path)
-    
-    return paths
-}
-
-
-// O(n) run time
-// O(n) space time
-
-func getUniquePathsInBSTHelper(tree: BST?, paths: inout [[Int]], path: inout [Int]) {
-    
-    if let currentNode = tree {
-        if let nodeValue = currentNode.value {
-            path.append(nodeValue)
-        }
-        
-        if currentNode.left == nil && currentNode.right == nil {
-            paths.append(path)
-        } else {
-            if let leftNode = currentNode.left {
-                getUniquePathsInBSTHelper(tree: leftNode, paths: &paths, path: &path)
-            }
-            
-            if let rightNode = currentNode.right {
-                getUniquePathsInBSTHelper(tree: rightNode, paths: &paths, path: &path)
-            }
-        }
-    }
-}
-
 //4. To find the max sum nodes in a path from root to leaf in a BST
 
 // Run Time O(n^2)
 // Space Complexity O(n) because of recursion
-func getMaxSumInPaths(tree: BST?) -> Int {
-    //getPaths
-    //getMaxSumFromPaths
-    var maxSum = 0
-    var uniquePaths: [[Int]] = []
-    var path: [Int] = []
-    
-    getUniquePathsInBSTHelper(tree: tree, paths: &uniquePaths, path: &path)
-    
-    maxSum = getMaxSumFromPaths(uniquePath: uniquePaths)
-    return maxSum
-}
 
-func getUniquePathsInTree(tree: BST?, uniquePaths: inout [[Int]], path: inout[Int]) -> [[Int]] {
-    if let currentNode = tree {
-        if let nodeValue = currentNode.value {
-            path.append(nodeValue)
+func getMaxSumInPaths(tree: BST?, pathSum: Int) -> Int {
+    if tree?.left == nil && tree?.right == nil {
+        return pathSum
+    } else {
+        if let leftNode = tree?.left, let leftNodeValue = leftNode.value {
+            return pathSum > getMaxSumInPaths(tree: leftNode, pathSum: pathSum + leftNodeValue) ? pathSum : getMaxSumInPaths(tree: leftNode, pathSum: pathSum + leftNodeValue)
         }
-        if currentNode.left == nil && currentNode.right == nil {
-            uniquePaths.append(path)
-        } else {
-            if let leftNode = currentNode.left {
-                getUniquePathsInTree(tree: leftNode, uniquePaths: &uniquePaths, path: &path)
-            }
-            
-            if let rightNode = currentNode.right {
-                getUniquePathsInTree(tree: rightNode, uniquePaths: &uniquePaths, path: &path)
-            }
-        }
-    }
-    return []
-}
-
-
-//
-func getMaxSumFromPaths(uniquePath:[[Int]]) -> Int {
-    var maxSum = 0
-    var currentSum = 0
-    
-    for path in uniquePath {
-        maxSum = currentSum > maxSum ? currentSum : maxSum
-        currentSum = 0
-        for element in path {
-            currentSum = currentSum + element
+        
+        if let rightNode = tree?.right, let rightNodeValue = rightNode.value {
+            return pathSum > getMaxSumInPaths(tree: rightNode, pathSum: pathSum + rightNodeValue) ? pathSum : getMaxSumInPaths(tree: rightNode, pathSum: pathSum + rightNodeValue)
         }
     }
     
-    return maxSum
+    return pathSum
 }
 
 

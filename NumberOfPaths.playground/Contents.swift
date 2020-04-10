@@ -30,3 +30,34 @@ func findNumberOfPathsHelper(endPoint:Int, c: Int, r: Int) -> Int {
 }
 
 findNumberofPaths(n: 3)
+
+
+func firstNotRepeatingCharacter(s: String) -> Character {
+    var repeatedCharacters: [Character: Int] = [:]
+
+    for (index,char) in s.enumerated() {
+        if let _ = repeatedCharacters[char] {
+           repeatedCharacters[char] = Int.max
+        } else {
+            repeatedCharacters[char] = index
+        }
+    }
+
+    var minIndex = Int.max
+    print("Repeated characters \(repeatedCharacters)")
+    for (repeatedCharacter) in repeatedCharacters {
+        print("Comparing \(repeatedCharacter.value) to \(minIndex)")
+        if repeatedCharacter.value < minIndex {
+            minIndex = repeatedCharacter.value
+        }
+    }
+
+    print(minIndex)
+    if minIndex == -1 {
+        return "_"
+    } else {
+        return Array(s)[minIndex]
+    }
+}
+
+firstNotRepeatingCharacter(s: "abacabad")
