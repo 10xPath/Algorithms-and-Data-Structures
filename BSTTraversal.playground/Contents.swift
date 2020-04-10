@@ -133,21 +133,30 @@ func countFreqOfKeyRecursion(tree: BST?, forKey: Int) -> Int {
 // Run Time O(n^2)
 // Space Complexity O(n) because of recursion
 
+let sampleTree = BST(value: 15).insert(value: 10).insert(value: 9).insert(value: 5).insert(value: 13).insert(value: 25).insert(value: 18).insert(value: 36)
+print(sampleTree.right?.value)
 func getMaxSumInPaths(tree: BST?, pathSum: Int) -> Int {
+    print("Starting at \(tree?.value)")
     if tree?.left == nil && tree?.right == nil {
         return pathSum
     } else {
-        if let leftNode = tree?.left, let leftNodeValue = leftNode.value {
-            return pathSum > getMaxSumInPaths(tree: leftNode, pathSum: pathSum + leftNodeValue) ? pathSum : getMaxSumInPaths(tree: leftNode, pathSum: pathSum + leftNodeValue)
+        guard let leftNode = tree?.left, let leftNodeValue = leftNode.value else {
+           return pathSum
         }
         
-        if let rightNode = tree?.right, let rightNodeValue = rightNode.value {
-            return pathSum > getMaxSumInPaths(tree: rightNode, pathSum: pathSum + rightNodeValue) ? pathSum : getMaxSumInPaths(tree: rightNode, pathSum: pathSum + rightNodeValue)
+        guard let rightNode = tree?.right, let rightNodeValue = rightNode.value else {
+           return pathSum
         }
+        
+        let maxLeft = getMaxSumInPaths(tree: leftNode, pathSum: pathSum + leftNodeValue)
+        let maxRight = getMaxSumInPaths(tree: rightNode, pathSum: pathSum + rightNodeValue)
+        
+        return maxLeft > maxRight ? maxLeft : maxRight
     }
-    
-    return pathSum
+
 }
+
+getMaxSumInPaths(tree: sampleTree, pathSum: sampleTree.value ?? 0)
 
 
 //**
