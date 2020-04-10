@@ -60,6 +60,45 @@ func isPalindromSubequence(word: String) -> Bool {
 
 isPalindromSubequence(word: "hhASLAT")
 
+
+func longestPalindromicSubstring(s: String) -> String {
+    var startLength = 0
+    var endLength = 0
+    var maxLength = 0
+    for index in 0..<s.count {
+        var lengthIndex = index
+        let singleLength = checkPalindromLength(s: s, leftIndex: lengthIndex, rightIndex:lengthIndex)
+        let duplicateLength = checkPalindromLength(s: s, leftIndex: lengthIndex, rightIndex: lengthIndex + 1)
+        let innerMaxLength = singleLength > duplicateLength ? singleLength :  duplicateLength
+        if innerMaxLength > (endLength - startLength) {
+            startLength = index - innerMaxLength/2
+            endLength = index + innerMaxLength/2
+            maxLength = innerMaxLength
+        }
+    }
+    //    let range = Range(
+    //    range.star
+    //    return s.substring(with: Range()
+    let startIndex = s.index(s.startIndex, offsetBy: startLength)
+    let endIndex = s.index(s.startIndex, offsetBy: endLength - 1)
+    let range = startIndex...endIndex
+    return String(s[range])
+}
+
+func checkPalindromLength(s: String, leftIndex: Int, rightIndex: Int) -> Int {
+    var leftIndex = leftIndex
+    var rightIndex = rightIndex
+    while (leftIndex >= 0 && rightIndex < s.count && Array(s)[leftIndex] == Array(s)[rightIndex]) {
+        leftIndex = leftIndex - 1
+        rightIndex = rightIndex + 1
+    }
+    
+    return rightIndex - leftIndex
+}
+
+longestPalindromicSubstring(s: "racecar")
+longestPalindromicSubstring(s: "abba")
+
 //func isPalindromSubsequenceRecursion(word: String) -> Bool {
 //
 //    if word.count < 3 {
@@ -104,30 +143,30 @@ isPalindromSubequence(word: "hhASLAT")
 //isPalindromSubsequenceRecursion(word: "hi a slant at a nasal lhn")
 
 func isSubsequence(_ s: String, _ t: String) -> Bool {
-     var arrayChar: [Character] = []
-     
-     for char in s {
-         arrayChar.append(char)
-     }
-     
-     for char in t {
-     
-         
-         if let firstChar = arrayChar.first {
-            print("Comparing \(firstChar) to \(char)")
-             if firstChar == char {
-                 arrayChar.removeFirst()
-                if arrayChar.isEmpty {
-                         return true
-                }
-             }
-         }
-       
-     }
+    var arrayChar: [Character] = []
     
-     return false
-     
- }
+    for char in s {
+        arrayChar.append(char)
+    }
+    
+    for char in t {
+        
+        
+        if let firstChar = arrayChar.first {
+            print("Comparing \(firstChar) to \(char)")
+            if firstChar == char {
+                arrayChar.removeFirst()
+                if arrayChar.isEmpty {
+                    return true
+                }
+            }
+        }
+        
+    }
+    
+    return false
+    
+}
 
 isSubsequence("abc", "ahbgdc")
 
