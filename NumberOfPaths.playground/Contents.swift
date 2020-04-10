@@ -12,24 +12,21 @@ func findNumberofPaths(n: Int) -> Int {
         return 0
     }
     
-    var paths = 0
-    var x = 0
-    var y = 0
+    return findNumberOfPathsHelper(endPoint: n - 1, c: 0, r: 0)
+
+}
+
+func findNumberOfPathsHelper(endPoint:Int, c: Int, r: Int) -> Int {
+    if c > endPoint || r > endPoint {
+        return 0
+    }
     
-    findNumberOfPathsHelper(endPoint: n - 1, paths: &paths, x: x, y: y)
-    return paths
-}
-
-func findNumberOfPathsHelper(endPoint:Int, paths: inout Int, x: Int, y: Int) {
-    if x > endPoint || y > endPoint {
-        return
-    }
-    if (x == endPoint && y == endPoint) {
-        paths = paths + 1
+    if (c == endPoint && r == endPoint) {
+        return 1
     } else {
-        findNumberOfPathsHelper(endPoint: endPoint, paths: &paths, x: x + 1, y: y)
-        findNumberOfPathsHelper(endPoint: endPoint, paths: &paths, x: x, y: y + 1)
+        return findNumberOfPathsHelper(endPoint: endPoint, c: c + 1, r: r) + findNumberOfPathsHelper(endPoint: endPoint,c: c, r: r + 1)
+        
     }
 }
 
-findNumberofPaths(n: 4)
+findNumberofPaths(n: 3)
