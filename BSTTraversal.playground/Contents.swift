@@ -106,7 +106,8 @@ func countFreqOfKey(tree: BST?, forKey: Int) -> Int {
     return count
 }
 
-//1. 1^n
+//1. O(log(n) Run time complexity
+//2. O(n) Space time complxiety
 
 func countFreqOfKeyRecursion(tree: BST?, forKey: Int) -> Int {
     
