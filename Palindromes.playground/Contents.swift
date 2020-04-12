@@ -92,9 +92,9 @@ func getSubsequencesHelper(s: String, results: inout [String], subSequence: inou
 }
 
 
-func isPalindrom(s: String) -> Bool {
+func isPalindrom(s: String , charLengthBiggerThan length: Int) -> Bool {
     
-    if s.count < 2 {
+    if s.count <= length {
         return false
     }
         
@@ -128,7 +128,7 @@ func hasAtLeastOnePalindromeSubsequence(s: String) -> Bool {
     } else {
        let subSequencesOfString = getSubsequences(s: stringWithoutSpace)
         for subSequence in subSequencesOfString {
-            if isPalindrom(s: subSequence) {
+            if isPalindrom(s: subSequence, charLengthBiggerThan: 1) {
                 return true
             }
         }
@@ -137,8 +137,32 @@ func hasAtLeastOnePalindromeSubsequence(s: String) -> Bool {
     return false
 }
 
-hasAtLeastOnePalindromeSubsequence(s: "a")
+//10.Write a recursive function that prints all the palindrome subsequences of a string that is of length at most 8 without duplicates and ordered by the length of the subsequence. Example: INPUT: “aaba”. OUTPUT: ‘a’, ‘b’, ‘aa’, ‘aba’
+//Helper Functions I used:
+//getStringWithNoSpaceAndLowerCase
+//getSubsequences
+//isPalindrom
+func getAllPalindromicSubstring(s: String) -> [String] {
+     var palindromeSubsequences: [String] = []
+    let stringWithoutSpace = getStringWithNoSpaceAndLowerCase(word: s)
+    if stringWithoutSpace.count == 0 || stringWithoutSpace.count > 8 {
+        return []
+    } else {
+       let subSequencesOfString = getSubsequences(s: stringWithoutSpace)
+       
+        for subSequence in subSequencesOfString {
+            if isPalindrom(s: subSequence, charLengthBiggerThan: 0) {
+                palindromeSubsequences.append(subSequence)
+            }
+        }
+    }
+    
+    return palindromeSubsequences
+}
 
+
+hasAtLeastOnePalindromeSubsequence(s: "a")
+getAllPalindromicSubstring(s: "aaba")
 
 getSubsequences(s: "applea")
 
