@@ -38,4 +38,3 @@ func getSubsetsHelper(nums: [Int], results: inout [[Int]], subArray: inout [Int]
 print(getSubsets(nums: nums))
 
 
-
