@@ -23,3 +23,28 @@ func fibbinaci(n: Int) -> Int {
 
 fibbinaci(n: 10)
 
+
+//2. Add memoization to the fibonacci function
+
+func fibWithMemoization(n: Int, memo: inout [Int: Int]) -> Int {
+    
+    if n == 0 {
+        return 0
+    }
+    
+    if n == 1 {
+        return 1
+    }
+    
+    if let sum = memo[n] {
+        return sum
+    } else {
+        let sum = fibWithMemoization(n: n - 1, memo: &memo) + fibWithMemoization(n: n - 2, memo: &memo)
+        return sum
+    }
+}
+
+var emptyDictionary: [Int: Int] = [:]
+
+fibWithMemoization(n: 10, memo: &emptyDictionary)
+
