@@ -111,5 +111,64 @@ func isPalindrome(s: String) -> Bool {
 
 longestPalindromicSubsequence(s: s)
 
+//Top down approach
+private func longestPalindromicSubsequenceTopDown(s: String) {
+    var startIndex = 0
+    var endIndex = s.count - 1
+    
+    longestPalindromicSubsequenceTopDownHelper(s: s, startIndex: startIndex, endIndex: endIndex)
+}
+
+//let s = "bbbab"
+private func longestPalindromicSubsequenceTopDownHelper(s: String, startIndex: Int, endIndex: Int) -> Int {
+    
+    if startIndex > endIndex {
+        return 0
+    } else if startIndex == endIndex {
+        return 1
+    } else {
+        if Array(s)[startIndex] == Array(s)[endIndex] {
+            return longestPalindromicSubsequenceTopDownHelper(s: s, startIndex: startIndex + 1 , endIndex: endIndex - 1) + 2
+        } else {
+            let longestPalindromicStart = longestPalindromicSubsequenceTopDownHelper(s: s, startIndex: startIndex + 1 , endIndex: endIndex)
+            let longestPalindromicEnd = longestPalindromicSubsequenceTopDownHelper(s: s, startIndex: startIndex , endIndex: endIndex - 1)
+            return longestPalindromicStart > longestPalindromicEnd ? longestPalindromicStart : longestPalindromicEnd
+        }
+    }
+}
+//             | |
+var example = "bbbab"
+
+//                 ||   longestPalindromicStart => 1 = 1
+//var example = "bbbab"
+
+//                ||    longestPalindromicEnd => 1 + 2 = 3
+//var example = "bbbab"
+//
+
+//Max(1,3) => 3
+//count = f(n) + 2
+//         /\
+//
+//
+//bbbb
+
+//startIndex = 0
+//endIndex = 4
+
+longestPalindromicSubsequenceTopDownHelper(s: example, startIndex: 0, endIndex: example.count - 1)
+
+print("Palindrome Length \(longestPalindromicSubsequenceTopDownHelper(s: example, startIndex: 0, endIndex: example.count - 1))")
+
+
+
+
+
+
+//Bottom up approach
+private func longestPalindromicSubsequenceBottomUp(s: String) {
+    
+}
+
 
 
