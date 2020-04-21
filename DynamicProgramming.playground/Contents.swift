@@ -48,6 +48,27 @@ var emptyDictionary: [Int: Int] = [:]
 
 fibWithMemoization(n: 10, memo: &emptyDictionary)
 
+var array = Array(repeating: -1, count: 11)
+func fibWithMemoizationArray(n: Int, memo: inout [Int]) -> Int {
+    
+    if n == 0 {
+        return 0
+    }
+    
+    if n == 1 {
+        return 1
+    }
+    
+    if memo[n] != -1 {
+        return memo[n]
+    } else {
+        let sum = fibWithMemoizationArray(n: n - 1, memo: &memo) + fibWithMemoizationArray(n: n - 2, memo: &memo)
+        return sum
+    }
+}
+
+fibWithMemoizationArray(n: 10, memo: &array)
+
 //Corner Cases:
 // Can we assert that there is no space
 // s = "bbbab" -> ["b"], ["bb"], ["bbb"], ["bbbb"] , ["bab"] -> ["bbbb"] -> 4
@@ -112,11 +133,11 @@ func isPalindrome(s: String) -> Bool {
 longestPalindromicSubsequence(s: s)
 
 //Top down approach
-private func longestPalindromicSubsequenceTopDown(s: String) {
+private func longestPalindromicSubsequenceTopDown(s: String) -> Int {
     var startIndex = 0
     var endIndex = s.count - 1
     
-    longestPalindromicSubsequenceTopDownHelper(s: s, startIndex: startIndex, endIndex: endIndex)
+    return longestPalindromicSubsequenceTopDownHelper(s: s, startIndex: startIndex, endIndex: endIndex)
 }
 
 //let s = "bbbab"
@@ -156,19 +177,14 @@ var example = "bbbab"
 //startIndex = 0
 //endIndex = 4
 
-longestPalindromicSubsequenceTopDownHelper(s: example, startIndex: 0, endIndex: example.count - 1)
-
-print("Palindrome Length \(longestPalindromicSubsequenceTopDownHelper(s: example, startIndex: 0, endIndex: example.count - 1))")
 
 
+print(longestPalindromicSubsequenceTopDown(s: example))
 
 
 
 
 //Bottom up approach
-private func longestPalindromicSubsequenceBottomUp(s: String) {
-    
-}
 
 
 
