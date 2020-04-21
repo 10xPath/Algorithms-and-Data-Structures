@@ -20,4 +20,28 @@ func findMaxConsecutiveOnes(_ nums: [Int]) -> Int {
     return maxCount
 }
 
+//Leetcode 1295
+func findNumbers(_ nums: [Int]) -> Int {
+    var evenCount = 0
+    for num in nums {
+        if countDigits(num: num) % 2 == 0 {
+            evenCount += 1
+        }
+    }
+    
+    return evenCount
+}
 
+func countDigits(num: Int) -> Int {
+    if num < 100000 && num > 9999 {
+        return 5
+    } else if num < 10000 && num > 999 {
+        return 4
+    } else if num < 1000 && num > 99 {
+        return 3
+    } else if num < 100 && num > 9 {
+        return 2
+    } else {
+        return 1
+    }
+}
