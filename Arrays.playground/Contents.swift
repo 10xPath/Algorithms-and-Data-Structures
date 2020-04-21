@@ -45,3 +45,19 @@ func countDigits(num: Int) -> Int {
         return 1
     }
 }
+
+//Leetcode 977
+func sortedSquares(_ A: [Int]) -> [Int] {
+    var squaredArray: [Int] = []
+    
+    for element in A {
+        squaredArray.append(element*element)
+    }
+    
+    return squaredArray.sorted()
+    
+}
+
+//Optimized approach
+
+
