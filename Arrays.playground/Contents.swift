@@ -14,7 +14,7 @@ func findMaxConsecutiveOnes(_ nums: [Int]) -> Int {
         }
         
         maxCount = max(maxCount, counter)
-    
+        
     }
     
     return maxCount
@@ -62,42 +62,76 @@ func sortedSquares(_ A: [Int]) -> [Int] {
 
 
 func sortedSquaresOptimized(_ A: [Int]) -> [Int] {
-      var negativeSorted: [Int] = []
-      var positiveSorted: [Int] = []
-      var mergedSorted: [Int] = []
-      
-      for element in A {
-          if element < 0 {
-              negativeSorted.append(element)
-          } else {
-              positiveSorted.append(element)
-          }
-      }
-      
-      var negativeArrayIndex = negativeSorted.count - 1
-      var positiveSortedIndex = 0
-      
-      while negativeArrayIndex >= 0 && positiveSortedIndex < positiveSorted.count {
-          let negativeArrValue = negativeSorted[negativeArrayIndex] * negativeSorted[negativeArrayIndex]
-          let positiveArrValue = positiveSorted[positiveSortedIndex] * positiveSorted[positiveSortedIndex]
-          if negativeArrValue < positiveArrValue {
-              mergedSorted.append(negativeArrValue)
-              negativeArrayIndex -= 1
-          } else {
-              mergedSorted.append(positiveArrValue)
-              positiveSortedIndex += 1
-          }
-      }
-      
-      while negativeArrayIndex >= 0 {
-          mergedSorted.append(negativeSorted[negativeArrayIndex] * negativeSorted[negativeArrayIndex])
-          negativeArrayIndex -= 1
-      }
-      
-      while positiveSortedIndex < positiveSorted.count {
-          mergedSorted.append(positiveSorted[positiveSortedIndex] * positiveSorted[positiveSortedIndex])
-          positiveSortedIndex += 1
-      }
-      
-      return mergedSorted
-  }
+    var negativeSorted: [Int] = []
+    var positiveSorted: [Int] = []
+    var mergedSorted: [Int] = []
+    
+    for element in A {
+        if element < 0 {
+            negativeSorted.append(element)
+        } else {
+            positiveSorted.append(element)
+        }
+    }
+    
+    var negativeArrayIndex = negativeSorted.count - 1
+    var positiveSortedIndex = 0
+    
+    while negativeArrayIndex >= 0 && positiveSortedIndex < positiveSorted.count {
+        let negativeArrValue = negativeSorted[negativeArrayIndex] * negativeSorted[negativeArrayIndex]
+        let positiveArrValue = positiveSorted[positiveSortedIndex] * positiveSorted[positiveSortedIndex]
+        if negativeArrValue < positiveArrValue {
+            mergedSorted.append(negativeArrValue)
+            negativeArrayIndex -= 1
+        } else {
+            mergedSorted.append(positiveArrValue)
+            positiveSortedIndex += 1
+        }
+    }
+    
+    while negativeArrayIndex >= 0 {
+        mergedSorted.append(negativeSorted[negativeArrayIndex] * negativeSorted[negativeArrayIndex])
+        negativeArrayIndex -= 1
+    }
+    
+    while positiveSortedIndex < positiveSorted.count {
+        mergedSorted.append(positiveSorted[positiveSortedIndex] * positiveSorted[positiveSortedIndex])
+        positiveSortedIndex += 1
+    }
+    
+    return mergedSorted
+}
+
+
+//Leetcode 1089
+
+func duplicateZeros(arr: inout [Int]) {
+    var i = 0
+    while i < arr.count {
+        if i >= arr.count {
+            return
+        }
+        if arr[i] == 0 {
+            shiftElementsRight(arr: &arr, insertArray: 0, atIndex: i)
+            i += 2
+        } else {
+            i += 1
+        }
+    }
+}
+
+func shiftElementsRight(arr: inout [Int], insertArray: Int,  atIndex: Int) {
+    var tempPrev = insertArray
+    for i in atIndex..<arr.count {
+        let tempCurr = arr[i]
+        arr[i] = tempPrev
+        tempPrev = tempCurr
+    }
+}
+
+var numWithZeros = [1,0,2,3,0,4,5,0]
+
+duplicateZeros(arr: &numWithZeros)
+
+
+

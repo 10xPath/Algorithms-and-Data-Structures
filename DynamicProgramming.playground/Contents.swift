@@ -3,7 +3,7 @@ import UIKit
 var str = "Hello, playground"
 
 
-//1.Write the fibonacci recursive function without memoization.
+//MARK: 1.Write the fibonacci recursive function without memoization.
 //10 -> 144
 // 0 + 1 = 1
 // 1 + 1 = 2
@@ -24,7 +24,7 @@ func fibbinaci(n: Int) -> Int {
 fibbinaci(n: 10)
 
 
-//2. Add memoization to the fibonacci function
+//MARK: 2. Add memoization to the fibonacci function
 
 func fibWithMemoization(n: Int, memo: inout [Int: Int]) -> Int {
     
@@ -100,6 +100,11 @@ func fibBottomUpOptimized(n: Int) -> Int {
 fibBottomUpOptimized(n: 10)
 
 fibWithMemoizationArray(n: 10, memo: &array)
+
+
+
+
+//MARK: 3. Write a function that returns the length of the longest palindromic subsequence of a string of length n <= 10.
 
 //Corner Cases:
 // Can we assert that there is no space
@@ -260,6 +265,55 @@ private func longestPalindromicSubsequenceRecursionHelperTopDown(s: String, star
 longestPalindromicSubsequenceRecursionTopDown(s: "abdcbaf")
 
 //Bottom up approach
+
+
+//MARK: 4. Write a function that returns the maximum length of non-decreasing subsequence of an array a of length n.
+
+func getAllSubsets(n: [Int], subsets: inout [[Int]], subset: inout [Int], startIndex: Int) -> [[Int]] {
+    subsets.append(subset)
+    
+    for i in startIndex..<n.count {
+        subset.append(n[i])
+        getAllSubsets(n: n, subsets: &subsets, subset: &subset, startIndex: i + 1)
+        subset.removeLast()
+    }
+    
+    return subsets
+}
+
+func maxLengthSubset(n: [Int]) -> Int {
+    
+    if n.count < 2 {
+        return 2
+    }
+    var subsets: [[Int]] = []
+    var subset:[Int] = []
+    var generatedSubsets = getAllSubsets(n: n, subsets: &subsets, subset: &subset, startIndex: 0)
+
+    var maxCount = Int.min
+    for subset in generatedSubsets {
+        var count = 1
+        if subset.count == 0 {
+            continue
+        }
+        for i in 0..<subset.count - 1{
+            count += 1
+            if subset[i] > subset[i + 1] || i + 1 == subset.count - 1{
+                
+                maxCount = maxCount > count ? maxCount : count
+                
+                print("maxCount recorded for \(count) \(subset)")
+                count = 0
+            }
+        }
+    }
+    
+    return maxCount
+}
+
+
+
+maxLengthSubset(n: [2, 5, 3, 5, 7])
 
 
 
