@@ -67,6 +67,38 @@ func fibWithMemoizationArray(n: Int, memo: inout [Int]) -> Int {
     }
 }
 
+func fibBottomUp(n: Int) -> Int {
+    var cache: [Int] = Array(repeating: 0, count: n + 1)
+     if n == 0 {return 0}
+    cache[1] = 1
+    
+    for i in 2...n - 1 {
+        print("\(cache[i - 1]) + \(cache[i-2])")
+        cache[i] = cache[i - 1] + cache[i - 2]
+    }
+   
+    return cache[n]
+}
+
+fibBottomUp(n: 10)
+
+func fibBottomUpOptimized(n: Int) -> Int {
+    if n < 2 {return n}
+    
+    var n0 = 0
+    var n1 = 1
+    
+    for i in 2..<n{
+        let n2 = n0 + n1
+        n0 = n1
+        n1 = n2
+    }
+    
+    return n0 + n1
+}
+
+fibBottomUpOptimized(n: 10)
+
 fibWithMemoizationArray(n: 10, memo: &array)
 
 //Corner Cases:
@@ -134,8 +166,8 @@ longestPalindromicSubsequence(s: s)
 
 //Top down approach
 private func longestPalindromicSubsequenceTopDown(s: String) -> Int {
-    var startIndex = 0
-    var endIndex = s.count - 1
+    let startIndex = 0
+    let endIndex = s.count - 1
     
     return longestPalindromicSubsequenceTopDownHelper(s: s, startIndex: startIndex, endIndex: endIndex)
 }

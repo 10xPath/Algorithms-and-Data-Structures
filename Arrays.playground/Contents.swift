@@ -46,7 +46,7 @@ func countDigits(num: Int) -> Int {
     }
 }
 
-//Leetcode 977
+//Leetcode 977 On(Logn)
 func sortedSquares(_ A: [Int]) -> [Int] {
     var squaredArray: [Int] = []
     
@@ -58,6 +58,46 @@ func sortedSquares(_ A: [Int]) -> [Int] {
     
 }
 
-//Optimized approach
+//Optimized approach O(n)
 
 
+func sortedSquaresOptimized(_ A: [Int]) -> [Int] {
+      var negativeSorted: [Int] = []
+      var positiveSorted: [Int] = []
+      var mergedSorted: [Int] = []
+      
+      for element in A {
+          if element < 0 {
+              negativeSorted.append(element)
+          } else {
+              positiveSorted.append(element)
+          }
+      }
+      
+      var negativeArrayIndex = negativeSorted.count - 1
+      var positiveSortedIndex = 0
+      
+      while negativeArrayIndex >= 0 && positiveSortedIndex < positiveSorted.count {
+          let negativeArrValue = negativeSorted[negativeArrayIndex] * negativeSorted[negativeArrayIndex]
+          let positiveArrValue = positiveSorted[positiveSortedIndex] * positiveSorted[positiveSortedIndex]
+          if negativeArrValue < positiveArrValue {
+              mergedSorted.append(negativeArrValue)
+              negativeArrayIndex -= 1
+          } else {
+              mergedSorted.append(positiveArrValue)
+              positiveSortedIndex += 1
+          }
+      }
+      
+      while negativeArrayIndex >= 0 {
+          mergedSorted.append(negativeSorted[negativeArrayIndex] * negativeSorted[negativeArrayIndex])
+          negativeArrayIndex -= 1
+      }
+      
+      while positiveSortedIndex < positiveSorted.count {
+          mergedSorted.append(positiveSorted[positiveSortedIndex] * positiveSorted[positiveSortedIndex])
+          positiveSortedIndex += 1
+      }
+      
+      return mergedSorted
+  }
