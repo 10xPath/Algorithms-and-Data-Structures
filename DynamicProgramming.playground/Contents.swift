@@ -164,16 +164,16 @@ func isPalindrome(s: String) -> Bool {
 
 longestPalindromicSubsequence(s: s)
 
-//Top down approach
-private func longestPalindromicSubsequenceTopDown(s: String) -> Int {
+//Longest Palindromic Subsequence Recursion
+private func longestPalindromicSubsequenceRecursion(s: String) -> Int {
     let startIndex = 0
     let endIndex = s.count - 1
     
-    return longestPalindromicSubsequenceTopDownHelper(s: s, startIndex: startIndex, endIndex: endIndex)
+    return longestPalindromicSubsequenceRecursionHelper(s: s, startIndex: startIndex, endIndex: endIndex)
 }
 
 //let s = "bbbab"
-private func longestPalindromicSubsequenceTopDownHelper(s: String, startIndex: Int, endIndex: Int) -> Int {
+private func longestPalindromicSubsequenceRecursionHelper(s: String, startIndex: Int, endIndex: Int) -> Int {
     
     if startIndex > endIndex {
         return 0
@@ -181,16 +181,16 @@ private func longestPalindromicSubsequenceTopDownHelper(s: String, startIndex: I
         return 1
     } else {
         if Array(s)[startIndex] == Array(s)[endIndex] {
-            return longestPalindromicSubsequenceTopDownHelper(s: s, startIndex: startIndex + 1 , endIndex: endIndex - 1) + 2
+            return longestPalindromicSubsequenceRecursionHelper(s: s, startIndex: startIndex + 1 , endIndex: endIndex - 1) + 2
         } else {
-            let longestPalindromicStart = longestPalindromicSubsequenceTopDownHelper(s: s, startIndex: startIndex + 1 , endIndex: endIndex)
-            let longestPalindromicEnd = longestPalindromicSubsequenceTopDownHelper(s: s, startIndex: startIndex , endIndex: endIndex - 1)
+            let longestPalindromicStart = longestPalindromicSubsequenceRecursionHelper(s: s, startIndex: startIndex + 1 , endIndex: endIndex)
+            let longestPalindromicEnd = longestPalindromicSubsequenceRecursionHelper(s: s, startIndex: startIndex , endIndex: endIndex - 1)
             return longestPalindromicStart > longestPalindromicEnd ? longestPalindromicStart : longestPalindromicEnd
         }
     }
 }
 //             | |
-var example = "bbbab"
+var example = "abdcba"
 
 //                 ||   longestPalindromicStart => 1 = 1
 //var example = "bbbab"
@@ -211,10 +211,53 @@ var example = "bbbab"
 
 
 
-print(longestPalindromicSubsequenceTopDown(s: example))
+print(longestPalindromicSubsequenceRecursion(s: example))
 
 
+//Top Down Approach
 
+private func longestPalindromicSubsequenceRecursionTopDown(s: String) -> Int {
+    let startIndex = 0
+    let endIndex = s.count - 1
+    var indexDictionary: [String: Int] = [:]
+    
+    return longestPalindromicSubsequenceRecursionHelperTopDown(s: s, startIndex: startIndex, endIndex: endIndex, lookupDictionary: &indexDictionary)
+}
+
+//let s = "bbbab"
+private func longestPalindromicSubsequenceRecursionHelperTopDown(s: String, startIndex: Int, endIndex: Int, lookupDictionary: inout [String: Int]) -> Int {
+    
+    if startIndex > endIndex {
+        return 0
+    } else if startIndex == endIndex {
+        return 1
+    } else {
+        
+        if let sequenceCount = lookupDictionary["\(startIndex)-\(endIndex)"] {
+            return sequenceCount
+        } else {
+            if Array(s)[startIndex] == Array(s)[endIndex] {
+                let sequence = longestPalindromicSubsequenceRecursionHelperTopDown(s: s, startIndex: startIndex + 1 , endIndex: endIndex - 1, lookupDictionary: &lookupDictionary) + 2
+                lookupDictionary["\(startIndex)-\(endIndex)"] = sequence
+                return sequence
+            } else {
+                let longestPalindromicStart = longestPalindromicSubsequenceRecursionHelperTopDown(s: s, startIndex: startIndex + 1 , endIndex: endIndex, lookupDictionary: &lookupDictionary)
+                let longestPalindromicEnd = longestPalindromicSubsequenceRecursionHelperTopDown(s: s, startIndex: startIndex , endIndex: endIndex - 1, lookupDictionary: &lookupDictionary)
+                
+                if longestPalindromicStart > longestPalindromicEnd {
+                     lookupDictionary["\(startIndex)-\(endIndex)"] = longestPalindromicStart
+                     return longestPalindromicStart
+                } else {
+                    lookupDictionary["\(startIndex)-\(endIndex)"] = longestPalindromicEnd
+                    return longestPalindromicEnd
+                }
+               
+            }
+        }
+    }
+}
+
+longestPalindromicSubsequenceRecursionTopDown(s: "abdcbaf")
 
 //Bottom up approach
 
