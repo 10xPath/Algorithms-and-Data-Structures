@@ -315,5 +315,57 @@ func maxLengthSubset(n: [Int]) -> Int {
 
 maxLengthSubset(n: [2, 5, 3, 5, 7])
 
+func maxLengthSubsetBottomUp(n:[Int]) -> Int{
+    var listOfMaxes: [Int] = Array(repeating: 1, count: n.count)
+    
+    //Record maxes
+    for i in 0..<n.count {
+        var maxLength = 1
+        for j in 0..<i {
+            if n[i] > n[j] {
+                print()
+                maxLength = maxLength > listOfMaxes[j] + 1 ? maxLength : listOfMaxes[j] + 1
+                listOfMaxes[i] = maxLength
+            }
+        }
+    }
+    
+    //Get max of maxes
+    var maxLength = Int.min
+    for max in listOfMaxes {
+        maxLength = max > maxLength ? max : maxLength
+    }
+    
+    return maxLength
+}
+
+maxLengthSubsetBottomUp(n: [2, 5, 3, 5, 7])
+
+
+
+//MARK: Write a recursive function that solves the knapsack problem.
+
+struct Item {
+    let weight: Int
+    let value: Int
+}
+
+func knapsackMaxValue(n: [Item], maxWeight: Int) -> Int {
+    return knapsackMaxValueHelper(n: n, maxWeight: maxWeight, index: 0)
+}
+
+func knapsackMaxValueHelper(n: [Item], maxWeight: Int, index: Int) -> Int{
+    if n.count == index {
+        return 0
+    }
+    
+    if  maxWeight - n[index].weight < 0 {
+        return knapsackMaxValueHelper(n: n, maxWeight: maxWeight, index: index + 1)
+    } else {
+        return  knapsackMaxValueHelper(n: n, maxWeight: maxWeight - n[index].weight , index: index + 1) + n[index].value >  knapsackMaxValueHelper(n: n, maxWeight: maxWeight , index: index + 1) ? knapsackMaxValueHelper(n: n, maxWeight: maxWeight - n[index].weight , index: index + 1) + n[index].value : knapsackMaxValueHelper(n: n, maxWeight: maxWeight , index: index + 1)
+    }
+}
+
+knapsackMaxValue(n: [Item(weight: 10, value: 1000), Item(weight: 2, value: 1), Item(weight: 19, value: 3000), Item(weight: 10, value: 3000)], maxWeight: 20)
 
 
