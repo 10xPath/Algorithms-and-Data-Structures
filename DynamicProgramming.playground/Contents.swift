@@ -69,14 +69,14 @@ func fibWithMemoizationArray(n: Int, memo: inout [Int]) -> Int {
 
 func fibBottomUp(n: Int) -> Int {
     var cache: [Int] = Array(repeating: 0, count: n + 1)
-     if n == 0 {return 0}
+    if n == 0 {return 0}
     cache[1] = 1
     
     for i in 2...n - 1 {
         print("\(cache[i - 1]) + \(cache[i-2])")
         cache[i] = cache[i - 1] + cache[i - 2]
     }
-   
+    
     return cache[n]
 }
 
@@ -156,7 +156,7 @@ func isPalindrome(s: String) -> Bool {
     var startIndex = 0
     var endIndex = s.count - 1
     while startIndex < endIndex {
-    
+        
         if Array(s)[startIndex] != Array(s)[endIndex] {
             return false
         }
@@ -250,13 +250,13 @@ private func longestPalindromicSubsequenceRecursionHelperTopDown(s: String, star
                 let longestPalindromicEnd = longestPalindromicSubsequenceRecursionHelperTopDown(s: s, startIndex: startIndex , endIndex: endIndex - 1, lookupDictionary: &lookupDictionary)
                 
                 if longestPalindromicStart > longestPalindromicEnd {
-                     lookupDictionary["\(startIndex)-\(endIndex)"] = longestPalindromicStart
-                     return longestPalindromicStart
+                    lookupDictionary["\(startIndex)-\(endIndex)"] = longestPalindromicStart
+                    return longestPalindromicStart
                 } else {
                     lookupDictionary["\(startIndex)-\(endIndex)"] = longestPalindromicEnd
                     return longestPalindromicEnd
                 }
-               
+                
             }
         }
     }
@@ -289,7 +289,7 @@ func maxLengthSubset(n: [Int]) -> Int {
     var subsets: [[Int]] = []
     var subset:[Int] = []
     var generatedSubsets = getAllSubsets(n: n, subsets: &subsets, subset: &subset, startIndex: 0)
-
+    
     var maxCount = Int.min
     for subset in generatedSubsets {
         var count = 1
@@ -367,5 +367,38 @@ func knapsackMaxValueHelper(n: [Item], maxWeight: Int, index: Int) -> Int{
 }
 
 knapsackMaxValue(n: [Item(weight: 10, value: 1000), Item(weight: 2, value: 1), Item(weight: 19, value: 3000), Item(weight: 10, value: 3000)], maxWeight: 20)
+
+func knapsackMaxValueBottomUp(items: [[Int]], maxWeight: Int) -> Int {
+    var values:[[Int]] = []
+    
+    for i in 0..<items.count + 1 {
+        values.append(Array(repeating:0, count: maxWeight + 1))
+    }
+    
+    //We're looping through items , and for each item we're break capacity into subproblems
+    for i in 1..<items.count + 1{
+        for j in 0..<maxWeight + 1 {
+            let currentValue = items[i - 1][0]
+            let currentWeight = items[i - 1][1]
+            if currentWeight <= j {
+                let notChoosingValue = values[i - 1][j]
+                let choosingValue = currentValue + values[i - 1][j - currentWeight]
+                
+                let maxValue = notChoosingValue > choosingValue ? notChoosingValue : choosingValue
+                
+                values[i][j] = maxValue
+                
+            } else {
+                values[i][j] = values[i - 1][j]
+                
+            }
+        }
+    }
+    
+    return values[items.count][maxWeight]
+    
+}
+
+knapsackMaxValueBottomUp(items: [[1,2],[3,4],[3,6]], maxWeight: 4)
 
 
