@@ -151,11 +151,11 @@ func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
         }
         
         endIndexNums -= 1
-         
+        
     }
 }
 
-//Leetcode 27 
+//Leetcode 27
 
 func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
     var endIndex = nums.count
@@ -176,7 +176,7 @@ func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
 //Leetcode 26
 
 func removeDuplicates(_ nums: inout [Int]) -> Int {
-
+    
     if nums.count <= 1 {
         return nums.count
     }
@@ -186,10 +186,57 @@ func removeDuplicates(_ nums: inout [Int]) -> Int {
     while secondIndex < nums.count {
         if nums[firstIndex] != nums[secondIndex] {
             nums[firstIndex + 1] = nums[secondIndex]
-           firstIndex += 1
+            firstIndex += 1
         }
-         secondIndex += 1
+        secondIndex += 1
     }
     
     return firstIndex + 1
+}
+
+//Leetcode 1346
+
+func checkIfExist(_ arr: [Int]) -> Bool {
+    var lookupDictionary: [Int:Int] = [:]
+    
+    for firstIndex in 0..<arr.count {
+        
+        for secondIndex in firstIndex + 1..<arr.count {
+            if let product = lookupDictionary[arr[secondIndex]] {
+                return true
+            } else {
+                lookupDictionary[arr[firstIndex] * 2] = arr[firstIndex]
+            }
+            
+            if arr[firstIndex] / 2 == arr[secondIndex] && arr[firstIndex] % 2 == 0 {
+                print(arr[firstIndex])
+                print(arr[secondIndex])
+                return true
+            }
+        }
+        
+    }
+    
+    return false
+}
+
+
+//Leetcode 1299
+
+func replaceElements(_ arr: [Int]) -> [Int] {
+    var mutableArr = arr
+    if arr.count == 0 {
+        return arr
+    }
+    for firstIndex in 0..<arr.count - 1 {
+        var maxElement = Int.min
+        for secondIndex in firstIndex + 1..<arr.count {
+            maxElement = mutableArr[secondIndex] > maxElement ? mutableArr[secondIndex] : maxElement
+        }
+        mutableArr[firstIndex] = maxElement
+    }
+    
+    mutableArr[arr.count - 1] = -1
+    
+    return mutableArr
 }
