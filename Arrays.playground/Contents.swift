@@ -133,7 +133,7 @@ var numWithZeros = [1,0,2,3,0,4,5,0]
 
 duplicateZeros(arr: &numWithZeros)
 
-//Leetcode 88 
+//Leetcode 88
 
 func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
     var indexM = m - 1
@@ -155,3 +155,41 @@ func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
     }
 }
 
+//Leetcode 27 
+
+func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
+    var endIndex = nums.count
+    var startIndex = 0
+    while startIndex < endIndex {
+        if nums[startIndex] == val{
+            nums[startIndex] = nums[endIndex - 1]
+            endIndex -= 1
+        } else {
+            startIndex += 1
+        }
+    }
+    
+    return endIndex
+}
+
+
+//Leetcode 26
+
+func removeDuplicates(_ nums: inout [Int]) -> Int {
+
+    if nums.count <= 1 {
+        return nums.count
+    }
+    var firstIndex = 0
+    var secondIndex = 1
+    
+    while secondIndex < nums.count {
+        if nums[firstIndex] != nums[secondIndex] {
+            nums[firstIndex + 1] = nums[secondIndex]
+           firstIndex += 1
+        }
+         secondIndex += 1
+    }
+    
+    return firstIndex + 1
+}
