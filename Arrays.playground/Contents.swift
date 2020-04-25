@@ -261,3 +261,29 @@ func moveZeroes(_ nums: inout [Int]) {
         secondIndex += 1
     }
 }
+
+//Leetcode 905
+
+func sortArrayByParity(_ A: [Int]) -> [Int] {
+    var mutableArray = A
+    var firstIndex = 0
+    var secondIndex = 1
+    
+    while (secondIndex < mutableArray.count) {
+        if mutableArray[firstIndex] % 2 != 0 && mutableArray[secondIndex] % 2 == 0 {
+            var firstIndexTemp = mutableArray[firstIndex]
+            mutableArray[firstIndex] = mutableArray[secondIndex]
+            mutableArray[secondIndex] = firstIndexTemp
+            
+            firstIndex += 1
+        }
+        
+        if mutableArray[firstIndex] % 2 == 0 {
+            firstIndex += 1
+        }
+        
+        secondIndex += 1
+    }
+    
+    return mutableArray
+}
