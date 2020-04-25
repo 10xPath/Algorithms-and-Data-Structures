@@ -133,5 +133,25 @@ var numWithZeros = [1,0,2,3,0,4,5,0]
 
 duplicateZeros(arr: &numWithZeros)
 
+//Leetcode 88 
 
+func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
+    var indexM = m - 1
+    var indexN = n - 1
+    var endIndexNums = m + n - 1
+    
+    while endIndexNums >= 0 && indexN >= 0 {
+        if indexM >= 0 && nums1[indexM] > nums2[indexN] {
+            nums1[endIndexNums] = nums1[indexM]
+            nums1[indexM] = nums2[indexN]
+            indexM -= 1
+        } else {
+            nums1[endIndexNums] = nums2[indexN]
+            indexN -= 1
+        }
+        
+        endIndexNums -= 1
+         
+    }
+}
 
