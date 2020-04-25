@@ -287,3 +287,59 @@ func sortArrayByParity(_ A: [Int]) -> [Int] {
     
     return mutableArray
 }
+
+
+//Leetcode 977
+ func sortedSquaresVersionTwo(_ A: [Int]) -> [Int] {
+      
+
+      var results: [Int] = []
+      
+       if A.count < 2 {
+          return [A[0] * A[0]]
+      }
+      var leftIndex = 0
+      var rightIndex = 1
+      for i in 0..<A.count {
+          if A[i] < 0 && A[i + 1] >= 0 {
+              leftIndex = i
+              rightIndex = i + 1
+          }
+      }
+      
+      while leftIndex >= 0 && rightIndex < A.count {
+          var rightIndexSquared = A[rightIndex] * A[rightIndex]
+          var leftIndexSquared = A[leftIndex] * A[leftIndex]
+          if rightIndexSquared > leftIndexSquared {
+              results.append(leftIndexSquared)
+              leftIndex -= 1
+          } else {
+              results.append(rightIndexSquared)
+              rightIndex += 1
+          }
+      }
+  
+      while rightIndex < A.count {
+          results.append(A[rightIndex] * A[rightIndex])
+          rightIndex += 1
+      }
+      
+      while leftIndex >= 0 {
+          results.append(A[leftIndex] * A[leftIndex])
+          leftIndex -= 1
+      }
+      return results
+  }
+
+//Leetcode 
+func heightChecker(_ heights: [Int]) -> Int {
+       var sortedHeights = heights.sorted()
+       var moveCount = 0
+       for i in 0..<heights.count {
+           if heights[i] != sortedHeights[i] {
+               moveCount += 1
+           }
+       }
+       
+       return moveCount
+   }
