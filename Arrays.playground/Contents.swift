@@ -331,7 +331,7 @@ func sortArrayByParity(_ A: [Int]) -> [Int] {
       return results
   }
 
-//Leetcode 
+//Leetcode
 func heightChecker(_ heights: [Int]) -> Int {
        var sortedHeights = heights.sorted()
        var moveCount = 0

@@ -366,6 +366,8 @@ func knapsackMaxValueHelper(n: [Item], maxWeight: Int, index: Int) -> Int{
     }
 }
 
+
+
 knapsackMaxValue(n: [Item(weight: 10, value: 1000), Item(weight: 2, value: 1), Item(weight: 19, value: 3000), Item(weight: 10, value: 3000)], maxWeight: 20)
 
 func knapsackMaxValueBottomUp(items: [[Int]], maxWeight: Int) -> Int {
@@ -402,3 +404,37 @@ func knapsackMaxValueBottomUp(items: [[Int]], maxWeight: Int) -> Int {
 knapsackMaxValueBottomUp(items: [[1,2],[3,4],[3,6]], maxWeight: 4)
 
 
+
+func knapsackMaxValueWithCache(n: [Item], maxWeight: Int) -> Int {
+    var cache: [Int: Int] = [:]
+    return knapsackMaxRecursionCache(n: n, maxWeight: maxWeight, index: 0, cache: &cache)
+}
+
+
+func knapsackMaxRecursionCache(n: [Item], maxWeight: Int, index: Int, cache: inout [Int:Int]) -> Int{
+    if n.count == index {
+        return 0
+    }
+    
+    if let value = cache[maxWeight] {
+        return value
+    }
+    
+    if  maxWeight - n[index].weight < 0 {
+        let value = knapsackMaxValueHelper(n: n, maxWeight: maxWeight, index: index + 1)
+        cache[maxWeight] = value
+        return value
+    } else {
+        let chooseValue = knapsackMaxValueHelper(n: n, maxWeight: maxWeight - n[index].weight , index: index + 1) + n[index].value
+        let notChooseValue = knapsackMaxValueHelper(n: n, maxWeight: maxWeight , index: index + 1)
+        if  chooseValue > notChooseValue {
+            cache[maxWeight - n[index].weight] = chooseValue
+            return chooseValue
+        } else {
+            cache[maxWeight] = knapsackMaxValueHelper(n: n, maxWeight: maxWeight , index: index + 1)
+            return notChooseValue
+        }
+    }
+}
+
+knapsackMaxValueWithCache(n: [Item(weight: 10, value: 1000), Item(weight: 2, value: 1), Item(weight: 19, value: 3000), Item(weight: 10, value: 3000)], maxWeight: 20)
