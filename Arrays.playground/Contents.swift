@@ -240,3 +240,24 @@ func replaceElements(_ arr: [Int]) -> [Int] {
     
     return mutableArr
 }
+
+//Leetcode 283
+
+func moveZeroes(_ nums: inout [Int]) {
+    var firstIndex = 0
+    var secondIndex = 1
+    
+    while secondIndex < nums.count {
+        if nums[firstIndex] == 0 && nums[secondIndex] != 0 {
+            nums[firstIndex] = nums[secondIndex]
+            nums[secondIndex] = 0
+            firstIndex += 1
+        }
+        
+        if nums[firstIndex] != 0 {
+            firstIndex += 1
+        }
+        
+        secondIndex += 1
+    }
+}
