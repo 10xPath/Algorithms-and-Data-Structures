@@ -331,7 +331,7 @@ func sortArrayByParity(_ A: [Int]) -> [Int] {
       return results
   }
 
-//Leetcode
+//Leetcode 1051
 func heightChecker(_ heights: [Int]) -> Int {
        var sortedHeights = heights.sorted()
        var moveCount = 0
@@ -343,3 +343,107 @@ func heightChecker(_ heights: [Int]) -> Int {
        
        return moveCount
    }
+
+//Leetcode 487
+func findMaxConsecutiveOnesTwo(_ nums: [Int]) -> Int {
+      var maxLength = 0
+      var zero = 0
+      
+      var j=0
+      
+      for i in 0..<nums.count {
+          if(nums[i]==0){
+              zero += 1
+          }
+          
+          while(zero>1){
+              if(nums[j]==0){
+                  zero -= 1
+              }
+              j += 1
+          }
+          maxLength = i - j + 1 > maxLength ? i - j + 1 : maxLength
+      }
+      
+      return maxLength
+  }
+
+//Leetcode 414
+
+func thirdMax(_ nums: [Int]) -> Int {
+     var maxNum = Int.min
+     
+     //Get maxNum
+     for num in nums {
+         maxNum = num > maxNum ? num : maxNum
+     }
+     
+     var secondMax = Int.min
+     for num in nums {
+         if num < maxNum && num > secondMax {
+             secondMax = num
+         }
+     }
+     
+     var thirdMax = Int.min
+     
+     for num in nums {
+         if num < secondMax && num > thirdMax {
+             thirdMax = num
+         }
+     }
+     
+     if thirdMax != Int.min {
+         return thirdMax
+     } else {
+         return maxNum
+     }
+ }
+
+//Leetcode 448
+
+func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
+    
+    if nums.isEmpty {
+        return nums
+    }
+    var numSet: Set<Int> = Set<Int>()
+    for i in 1...nums.count {
+        numSet.insert(i)
+    }
+    
+    for num in nums {
+        numSet.remove(num)
+    }
+    
+    return Array(numSet)
+}
+
+
+func findDisappearedNumbersIndex(_ nums: [Int]) -> [Int] {
+       
+       if nums.isEmpty {
+           return []
+       }
+       var numsCopy = nums
+       var results:[Int] = []
+       for i in 0..<nums.count {
+           let index = abs(numsCopy[i]) - 1
+           if numsCopy[index] > 0 {
+               numsCopy[index] = numsCopy[index] * -1
+           }
+           
+       }
+       
+       for i in 0..<numsCopy.count {
+           if numsCopy[i] > 0 {
+               results.append(i + 1)
+           }
+       }
+       
+       return results
+   }
+
+
+
+
