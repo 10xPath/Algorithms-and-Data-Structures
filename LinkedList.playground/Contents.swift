@@ -3,18 +3,19 @@ import UIKit
 var str = "Hello, playground"
 
 
+class ListNode {
+    var next: ListNode?
+    var value: Int?
+    
+    init(value: Int) {
+        self.value = value
+    }
+}
+
 class MyLinkedList {
     
     var head:ListNode?
     
-    class ListNode {
-        var next: ListNode?
-        var value: Int?
-        
-        init(value: Int) {
-            self.value = value
-        }
-    }
 
     /** Initialize your data structure here. */
     init() {
@@ -158,3 +159,19 @@ print("LinkedList \(linkedList)")
 print("Get \(linkedList.get(0))")
 
 
+//Leetcode 141
+
+func hasCycle(_ head: ListNode?) -> Bool {
+    var slow = head
+    var fast = slow?.next
+    
+    while slow != nil && fast != nil{
+        if slow === fast{
+            return true
+        }
+        slow = slow?.next
+        fast = fast?.next?.next
+    }
+    
+    return false
+}
