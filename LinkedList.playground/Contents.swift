@@ -12,6 +12,20 @@ class ListNode {
     }
 }
 
+class Node {
+    var value: Int
+    var prev: Node?
+    var next: Node?
+    var child: Node?
+    
+    init(_ val: Int) {
+        value = val
+        prev = nil
+        next = nil
+        child = nil
+    }
+}
+
 class MyLinkedList {
     
     var head:ListNode?
@@ -363,7 +377,7 @@ func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
 }
 
 
-//Leetcode 430 
+//Leetcode 430
 func flatten(_ head: Node?) -> Node? {
            if head == nil { return head }
       
