@@ -301,7 +301,7 @@ func isPalindrome(_ head: ListNode?) -> Bool {
       return prev
   }
 
-//Leetcode
+//Leetcode 21
 func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     var l1 = l1, l2 = l2
     
@@ -322,6 +322,41 @@ func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
         current.next = l2
     } else {
         current.next = l1
+    }
+    
+    return head.next
+}
+
+//Leetcode 2
+func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+    var carry: Int = 0
+    let head = ListNode(value: -1)
+    var dummy: ListNode? = head
+    var i1: ListNode? = l1
+    var i2: ListNode? = l2
+    
+    while i1 != nil || i2 != nil {
+        var v1 = 0
+        var v2 = 0
+        if let val = i1?.value {
+            v1 = val
+        }
+        
+        if let val = i2?.value {
+            v2 = val
+        }
+        
+        let sum = v1 + v2 + carry
+        dummy?.next = ListNode(value: sum % 10)
+        carry = sum / 10
+        
+        i1 = i1?.next
+        i2 = i2?.next
+        dummy = dummy?.next
+    }
+    
+    if carry != 0 {
+        dummy?.next = ListNode(value: carry)
     }
     
     return head.next
