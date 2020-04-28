@@ -301,14 +301,14 @@ func isPalindrome(_ head: ListNode?) -> Bool {
       return prev
   }
 
-//Leetcode 
+//Leetcode
 func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     var l1 = l1, l2 = l2
     
-    let head = ListNode(-1)
+    let head = ListNode(value: -1)
     var current = head
     
-    while let val1 = l1?.val, let val2 = l2?.val {
+    while let val1 = l1?.value, let val2 = l2?.value {
         if val1 > val2 {
             current.next = l2
             l2 = l2?.next
