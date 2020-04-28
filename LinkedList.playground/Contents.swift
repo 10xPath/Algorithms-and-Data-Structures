@@ -16,7 +16,7 @@ class MyLinkedList {
     
     var head:ListNode?
     
-
+    
     /** Initialize your data structure here. */
     init() {
         head = nil
@@ -174,4 +174,47 @@ func hasCycle(_ head: ListNode?) -> Bool {
     }
     
     return false
+}
+
+
+//Leetcode 160
+
+func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
+    
+    var a: ListNode? = headA
+    var b: ListNode? = headB
+    
+    //a and b equalize the second round and eventually they will both be nil or have the same value
+    while a !== b {
+        a = a == nil ? headB : a?.next
+        b = b == nil ? headA : b?.next
+    }
+    
+    return a;
+}
+
+//Leetcode 19
+func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
+    guard let  head = head else {
+        return nil
+    }
+    
+    var newHead = ListNode(value: 0)
+    var slow:ListNode? = newHead
+    var fast:ListNode? = newHead
+    
+    newHead.next = head
+    
+    for i in 0...n {
+        fast = fast?.next
+    }
+    
+    
+    while (fast != nil) {
+        slow = slow?.next
+        fast = fast?.next
+    }
+    slow?.next = slow?.next?.next
+    return newHead.next
+    
 }
