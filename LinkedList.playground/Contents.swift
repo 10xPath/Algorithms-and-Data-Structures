@@ -218,3 +218,19 @@ func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
     return newHead.next
     
 }
+
+//Leetcode 206
+func reverseList(_ head: ListNode?) -> ListNode? {
+    var prev: ListNode?
+    var current = head
+    
+    while current != nil {
+        let tempNext = current?.next
+        current?.next = prev
+        prev = current
+        
+        current = tempNext
+    }
+    
+    return prev
+}
