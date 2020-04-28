@@ -266,17 +266,17 @@ func isPalindrome(_ head: ListNode?) -> Bool {
           slow = slow?.next
           fast = fast?.next?.next
       }
-      print(slow?.val)
+      print(slow?.value)
       var reversed = reversedLinkedList(head: slow?.next)
       var head = head
       
-      print(reversed?.val)
-      print(head?.val)
+      print(reversed?.value)
+      print(head?.value)
       
-      print(reversed?.next?.val)
-      print(head?.next?.val)
+      print(reversed?.next?.value)
+      print(head?.next?.value)
       while reversed != nil {
-          if reversed?.val != head?.val {
+          if reversed?.value != head?.value {
               return false
           }
           
@@ -300,3 +300,29 @@ func isPalindrome(_ head: ListNode?) -> Bool {
       
       return prev
   }
+
+//Leetcode 
+func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+    var l1 = l1, l2 = l2
+    
+    let head = ListNode(-1)
+    var current = head
+    
+    while let val1 = l1?.val, let val2 = l2?.val {
+        if val1 > val2 {
+            current.next = l2
+            l2 = l2?.next
+        } else {
+            current.next = l1
+            l1 = l1?.next
+        }
+        current = current.next!
+    }
+    if l1 == nil {
+        current.next = l2
+    } else {
+        current.next = l1
+    }
+    
+    return head.next
+}
