@@ -234,3 +234,69 @@ func reverseList(_ head: ListNode?) -> ListNode? {
     
     return prev
 }
+
+//Leetcode 206
+
+func oddEvenList(_ head: ListNode?) -> ListNode? {
+    if head == nil {
+        return nil
+    }
+    var oddNode = head
+    var evenNode = head?.next
+    var evenHead = evenNode
+
+    while evenNode != nil && evenNode?.next != nil{
+        oddNode?.next = evenNode?.next
+        oddNode = oddNode?.next
+        evenNode?.next = oddNode?.next
+        evenNode = evenNode?.next
+    }
+    
+    oddNode?.next = evenHead
+    return head
+}
+
+//Leetcode 234
+
+func isPalindrome(_ head: ListNode?) -> Bool {
+      var slow = head
+      var fast = head
+      
+      while fast?.next != nil && fast?.next?.next != nil {
+          slow = slow?.next
+          fast = fast?.next?.next
+      }
+      print(slow?.val)
+      var reversed = reversedLinkedList(head: slow?.next)
+      var head = head
+      
+      print(reversed?.val)
+      print(head?.val)
+      
+      print(reversed?.next?.val)
+      print(head?.next?.val)
+      while reversed != nil {
+          if reversed?.val != head?.val {
+              return false
+          }
+          
+          reversed = reversed?.next
+          head = head?.next
+      }
+      
+      return true
+  }
+  
+  func reversedLinkedList( head: ListNode?) -> ListNode? {
+      var prev:ListNode?
+      var current = head
+      
+      while current != nil {
+          var tempNext = current?.next
+          current?.next = prev
+          prev = current
+          current = tempNext
+      }
+      
+      return prev
+  }
