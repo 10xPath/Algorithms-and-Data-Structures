@@ -361,3 +361,37 @@ func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     
     return head.next
 }
+
+
+//Leetcode 430 
+func flatten(_ head: Node?) -> Node? {
+           if head == nil { return head }
+      
+      var p = head
+      while p != nil {
+          // case 1: No child, proceed
+          if p?.child == nil {
+              p = p?.next
+              continue
+          }
+          
+          // case 2: got child, find the tail of the child and link it to p.next
+          var temp = p?.child
+          
+          //find the tail of the child
+          while temp?.next != nil {
+              temp = temp?.next
+          }
+          
+          // connect tail with p.net, if it is not null
+          temp?.next = p?.next
+          
+          if p?.next != nil { p?.next!.prev = temp }
+          
+          //connect p with p.child, and remove p.child
+          p?.next = p?.child
+          p?.child?.prev = p
+          p?.child = nil
+      }
+      return head
+  }
