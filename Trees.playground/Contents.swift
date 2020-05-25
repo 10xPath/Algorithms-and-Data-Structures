@@ -13,7 +13,7 @@ var str = "Hello, playground"
      }
  }
 
-
+//Leetcode 102
 func levelOrder(_ root: TreeNode?) -> [[Int]] {
     var queue: [TreeNode] = []
     if let root = root {
@@ -44,4 +44,17 @@ func levelOrder(_ root: TreeNode?) -> [[Int]] {
     }
     
     return results
+}
+
+
+//Leetcode 104 
+func maxDepth(_ root: TreeNode?) -> Int {
+    if root == nil {
+        return 0
+    }
+    
+    let leftDepth = maxDepth(root?.left)
+    let rightDepth = maxDepth(root?.right)
+    
+    return leftDepth > rightDepth ? leftDepth + 1 : rightDepth + 1
 }
