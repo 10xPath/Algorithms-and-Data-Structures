@@ -409,5 +409,11 @@ func countLeaves(adjList: [Int:[Int]], n: Int, startingPoint: Int) -> Int {
     return leafCounter
 }
 
+//MARK: 5.2
+
+func countEdges(adjList: [Int: [Int]], n: Int, startingPoint:Int) -> Int {
+    return adjList.count - 1
+}
+
 
 
