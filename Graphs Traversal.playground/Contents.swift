@@ -44,7 +44,7 @@ func countNumberOfNodesDFSStack(adjList:[Int:[Int]], startingPoint: Int) -> Int 
     
     var stack = [startingPoint]
     
-    if !stack.isEmpty {
+    while !stack.isEmpty {
         nodeCounter += 1
         let currentNode = stack.removeLast()
         let neighbors = adjList[currentNode]!
@@ -67,7 +67,7 @@ func countNumberOfNodesBFS(adjList: [Int:[Int]], startingPoint: Int) -> Int{
     
     var queue = [startingPoint]
     
-    if !queue.isEmpty {
+    while !queue.isEmpty {
         nodeCounter += 1
         let currentNode = queue.removeFirst()
         let neighbors = adjList[currentNode]!
@@ -103,7 +103,7 @@ func isConnectedGraphDFSStack(adjList:[Int:[Int]], startingPoint: Int) {
        
        var stack = [startingPoint]
        
-       if !stack.isEmpty {
+       while !stack.isEmpty {
            nodeCounter += 1
            let currentNode = stack.removeLast()
            let neighbors = adjList[currentNode]!
@@ -127,7 +127,7 @@ func isConnectedGraphBFS(adjList: [Int:[Int]], startingPoint: Int) {
        
        var queue = [startingPoint]
        
-       if !queue.isEmpty {
+       while !queue.isEmpty {
            nodeCounter += 1
            let currentNode = queue.removeFirst()
            let neighbors = adjList[currentNode]!
@@ -210,7 +210,7 @@ func countNumberOfCellsInMatrixDFSStack(grid:[[Int]]) -> Int {
             if visited[row][column] == false && grid[row][column] == 1 {
                 var stack:[[Int]] = [[row,column]]
             
-                if !stack.isEmpty {
+                while !stack.isEmpty {
                     let currentCell = stack.removeLast()
                     
                     for direction in directions {
@@ -256,7 +256,7 @@ func countNumberOfCellsInMatrixBFS(grid:[[Int]]) -> Int {
             if visited[row][column] == false && grid[row][column] == 1 {
                 var queue:[[Int]] = [[row,column]]
             
-                if !queue.isEmpty {
+                while !queue.isEmpty {
                     let currentCell = queue.removeFirst()
                     
                     for direction in directions {
@@ -275,6 +275,108 @@ func countNumberOfCellsInMatrixBFS(grid:[[Int]]) -> Int {
     }
     
     return count
+}
+
+//MARK: 4.1
+
+func countConnectedComponentsDFS(adjList:[Int:[Int]], startingPoint: Int) -> Int {
+    var componentCounter = 0
+    var visited: [Int: Bool] = [:]
+       if adjList.count == 0 {
+           print("NO")
+       }
+       
+       var stack = [startingPoint]
+       
+       while !stack.isEmpty {
+           componentCounter += 1
+           let currentNode = stack.removeLast()
+           let neighbors = adjList[currentNode]!
+        
+        visited[currentNode, default: false] = true
+           for neighbor in neighbors {
+            if visited[neighbor] == true {
+                continue
+            }
+               stack.append(neighbor)
+           }
+       }
+       
+    return componentCounter
+}
+
+//MARK: 4.2
+func countConnectedComponentsBFS(adjList: [Int:[Int]], startingPoint: Int) -> Int {
+    var componentCounter = 0
+    var visited: [Int: Bool] = [:]
+       if adjList.count == 0 {
+           print("NO")
+       }
+       
+       var queue = [startingPoint]
+       
+       while !queue.isEmpty {
+           componentCounter += 1
+           let currentNode = queue.removeFirst()
+           let neighbors = adjList[currentNode]!
+           visited[currentNode] = true
+           for neighbor in neighbors {
+            if visited[neighbor] == true {
+                continue
+            }
+               queue.append(neighbor)
+           }
+       }
+       
+    return componentCounter
+}
+
+//MARK: 4.3
+
+public class UnionFind {
+    var parent: [Int]
+    var count: Int
+    
+    init(adjacencyList: [Int: [Int]]) {
+        //Loop through and populate parents
+        parent = []
+        count = 0
+        for (key,neigbors) in adjacencyList {
+            self.parent.append(key)
+            for i in 0..<neigbors.count {
+                count += 1
+            }
+            
+        }
+        
+    }
+    
+    //Find the parent of the value
+    public func find(_ p: Int) -> Int {
+        var p = p
+        while p != self.parent[p] {
+            self.parent[p] = self.parent[self.parent[p]]
+            p = self.parent[p]
+        }
+        return p
+    }
+    
+    //Combine the values
+    public func union(p: Int, q: Int) {
+           let i = find(p)
+           let j = find(q)
+           
+           if i == j {
+               return
+           }
+           self.parent[i] = j
+           self.count -= 1
+    }
+}
+
+func countConnectedComponentsDisjointSetUnion(adjList: [Int:[Int]]) -> Int {
+    let uf = UnionFind(adjacencyList: adjList)
+    return uf.parent.count
 }
 
 
