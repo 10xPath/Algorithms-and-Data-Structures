@@ -380,4 +380,34 @@ func countConnectedComponentsDisjointSetUnion(adjList: [Int:[Int]]) -> Int {
 }
 
 
+//MARK:5.1
+
+func countLeaves(adjList: [Int:[Int]], n: Int, startingPoint: Int) -> Int {
+    var leafCounter = 0
+    var referenceCount: [Int:Int] = [:] //I need to keep track of the amount of times each node is refererenced
+    
+    
+    var queue: [Int] = [startingPoint]
+    
+    while !queue.isEmpty {
+        var currentNode = queue.removeFirst()
+        
+        let neighbors = adjList[currentNode]!
+        
+        for neighbor in neighbors {
+            referenceCount[neighbor,default: 0] += 1
+            queue.append(neighbor)
+        }
+    }
+    
+    for (key, value) in referenceCount {
+        if value == 1 {
+            leafCounter += 1
+        }
+    }
+    
+    return leafCounter
+}
+
+
 
